@@ -8,7 +8,7 @@ import './gpxMapLayer.css'
 
 
 // function to generate the route line on the map
-const GPXLayer = ({ gpxFile, passRoute}) => {
+const GPXLayer  = ({ gpxFile, passRoute}) => {
   const map = useMap();
 
   useEffect(() => {

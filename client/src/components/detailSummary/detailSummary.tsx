@@ -7,7 +7,6 @@ type DetailSummaryProps = {
 
 
 function DetailSummary({ markers }: DetailSummaryProps) {
-  console.log('MARKER----', markers)
 
   if (!markers || Object.keys(markers).length === 0) {
     return <div style={{zIndex:"-100", position:"absolute", top:"1px"}}>No markers placed!</div>;

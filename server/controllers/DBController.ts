@@ -27,7 +27,8 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
       walkingSpeed: settings.speed,
       distanceMeasure: settings.distance,
     });
-    let response = await newMarker.save();
+    console.log(newMarker);
+    let response :any = await newMarker.save();
     for (const key in updatedMarkers) {
       response = await UserMarkers.findOneAndUpdate(
         { _id: key },
