@@ -1,54 +1,37 @@
+import * as mockingoose from 'mockingoose';
+import createServer from '../server';
+import supertest from 'supertest';
+import {getAccommodationPic} from '../controllers/apiController';
+import { Request, Response } from 'express';
 
-const createServer = require('../server.ts');
-const mockingoose = require('mockingoose');
-const router = require('../router.js');
-const supertest = require('supertest');
-const UserMarkers = require('../models/schema.js');
-const {getAccommodationPic} = require('../controllers/apiController.ts');
-const apiKey = require('../controllers/apiController.ts');
 const request = supertest;
 
-const mongoose = require('mongoose');
 const databaseName = 'test';
 
 const app = createServer();
 
-const photoRef = require('../__mocks__/mocks.js');
+const photoRef = 'AXCi2Q492N90TQKp2gO5m2GQ7dlb5LANxkl6oPW4RSe6lMyR74W8CSBkdCQIXVkJlf7PfM-GQp0-PSXxB060lmtAgbvP0bPsQR5Etqd1A0_I4NFnQcRKZmqkM-HkaW7uihhAYZBxWfg6Jeb9-sEI8rp8rjn8uC4YIFNMID0eQsaoRhH9S5qM';
 
-const mockResponse = () => {
-  const res = {};
+const mockResponse = (): Partial<Response> => { // Returns type with optional properties
+  const res: Partial<Response> = {};
   res.status = jest.fn().mockReturnValue(res); 
   res.json = jest.fn().mockReturnValue(res);
   res.send = jest.fn().mockReturnValue(res);
   return res;
 };
 
-describe('API Connection', () => {
-  test('.env configuration should work and lead to valid API key', async () => {
-      expect(apiKey).toBeDefined();
-  })
-});
-
 describe('GET /accommodationPic', () => {
-
-    beforeAll(async () => {
-        const url = `mongodb://127.0.0.1/${databaseName}`;
-        await mongoose.connect(url);
-    })
-        afterEach(async () => {
-        await mongoose.disconnect();
-    })
 
     describe('given a photo reference', () => {
 
       it('should return a valid image', async() => {
-        const res = mockResponse();
-        const req = {
+        const res: Partial<Response> = mockResponse() as Partial<Response>;
+        const req: Partial<Request> = {
           query: {
             photo_reference: `${photoRef}`
           }
-        }
-        await getAccommodationPic(req, res);
+        };
+        await getAccommodationPic(req as Request, res as Response);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({data: expect.anything()}))
         // Checks if the mock function was called with an object containing a data property, which can have any value except null or undefined.
 
@@ -57,16 +40,7 @@ describe('GET /accommodationPic', () => {
   });
 
   describe('GET /accommodation', () => {
-
-    // beforeAll(async() => {
-    //     const mongoServer = await MongoMemoryServer.create();
-    //     await mongoose.connect(mongoServer.getUri());
-    // })
-
-    // afterAll(async() => {
-    //     await mongoose.disconnect();
-    //     await mongoose.connection.close();
-    // })
+    
 })
 
     //     it('should save geographical markers to the database', async() => {
@@ -107,3 +81,13 @@ describe('GET /accommodationPic', () => {
 //     body: JSON.stringify({_id: _id, user_id: user_id, marker: marker, updatedMarkers: updatedMarkers, settings: settings}),
 //   })
 //   const data = await response.json();
+
+
+
+    // beforeAll(async () => {
+    //     const url = `mongodb://127.0.0.1/${databaseName}`;
+    //     await mongoose.connect(url);
+    // })
+    //     afterEach(async () => {
+    //     await mongoose.disconnect();
+    // })

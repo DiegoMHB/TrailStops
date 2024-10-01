@@ -1,12 +1,15 @@
 module.exports = {
     verbose: true,
+    preset: 'ts-jest',
     // clearMocks: true,
-    globals: {
-        axios: require("axios"),
-       },
-    testEnvironment: "jsdom",
+    testEnvironment: "node",
     transform: {
-        '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+      '^.+\\.(ts|tsx)?$': 'ts-jest',
+      '^.+\\.(js|jsx)$': 'babel-jest',
       },
-    setupFilesAfterEnv: ['@testing-library/jest-dom', './setupJest.js'],
+    moduleFileExtensions: ['ts', 'js'],
+    transformIgnorePatterns: ['node_modules/(?!(.*\\.mjs$|pdfjs-dist))'],
+    roots: ['<rootDir>/server', '<rootDir>/server/__tests__'],
+    testPathIgnorePatterns: ['/node_modules/', '<rootDir>/server/dist/'],
+    setupFilesAfterEnv: ['@testing-library/jest-dom', './server/setupJest.js'],
   };

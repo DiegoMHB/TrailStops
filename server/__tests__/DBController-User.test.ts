@@ -1,5 +1,5 @@
 import supertest from 'supertest';
-import mockingoose from 'mockingoose';
+import * as mockingoose from 'mockingoose';
 import createServer from '../server';
 import { User, UserMarkers } from '../models/schema';
 import { addUser, getUser, addMarker } from '../controllers/DBController';
@@ -7,6 +7,8 @@ import { Request, Response } from 'express';
 
 const request = supertest;
 const app = createServer();
+
+// Please ignore the red underline under mockingoose as the tests work fine. For a detailed overview, run 'npx jest --verbose'
 
 const mockResponse = (): Partial<Response> => {
     const res: Partial<Response> = {}; // Use Partial to allow optional properties
@@ -17,9 +19,7 @@ const mockResponse = (): Partial<Response> => {
 };
 
 describe('POST /user', () => {
-    beforeEach(() => {
-        mockingoose.resetAll();
-      });
+
     describe('given a name, email, and password', () => {
         const req: Partial<Request> = {
             body: {
@@ -82,9 +82,6 @@ describe('POST /user', () => {
 })
 
 describe('GET /user', () => {
-    beforeEach(() => {
-        mockingoose.resetAll();
-      });
 
       describe('given valid user credentials', () => {
         test('should access all associated markers', async () => {

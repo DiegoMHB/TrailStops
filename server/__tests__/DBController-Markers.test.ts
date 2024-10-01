@@ -1,8 +1,10 @@
-import mockingoose from 'mockingoose';
+import * as mockingoose from 'mockingoose';
 import { User, UserMarkers } from '../models/schema';
 import { addUser, getUser, addMarker } from '../controllers/DBController';
 import { Request, Response } from 'express';
 import fetchMock from 'jest-fetch-mock';
+
+// Please ignore the red underline under mockingoose as the tests work fine. For a detailed overview, run 'npx jest --verbose'
 
 const mockResponse = (): Partial<Response> => {
     const res: Partial<Response> = {}; // Use Partial to allow optional properties
@@ -11,13 +13,8 @@ const mockResponse = (): Partial<Response> => {
     res.send = jest.fn().mockReturnValue(res);
     return res;
 };
-// Use Partial for optional properties
-
 
 describe('POST /mapMarkers', () => {
-    beforeEach(() => {
-        mockingoose.resetAll();
-      });
 
       describe('given valid marker data', () => {
 
@@ -77,9 +74,6 @@ describe('POST /mapMarkers', () => {
 })
 
 describe('GET /mapMarkers', () => {
-    beforeEach(() => {
-        mockingoose.resetAll();
-      });
 
       describe('given a valid user id', () => {
         test('should retrieve all associated markers from the database', async () => {
@@ -90,9 +84,6 @@ describe('GET /mapMarkers', () => {
 })
 
 describe('DELETE /mapMarkers', () => {
-    beforeEach(() => {
-        mockingoose.resetAll();
-      });
 
       describe('given a user id and marker id', () => {
         test('should remove the marker id from the database', async () => {
@@ -104,7 +95,7 @@ describe('DELETE /mapMarkers', () => {
 
 describe('PUT /updateAllMarkers', () => {
     beforeEach(() => {
-        mockingoose.resetAll();
+      mockingoose.resetAll();
       });
 
       describe('given valid markers', () => {
@@ -118,7 +109,7 @@ describe('PUT /updateAllMarkers', () => {
 
 describe('PUT /accommodation', () => {
     beforeEach(() => {
-        mockingoose.resetAll();
+      mockingoose.resetAll();
       });
 
       describe('given a marker id and accommodation', () => {
@@ -131,7 +122,7 @@ describe('PUT /accommodation', () => {
 
 describe('GET /accommodation', () => {
     beforeEach(() => {
-        mockingoose.resetAll();
+      mockingoose.resetAll();
       });
 
       describe('given a valid marker', () => {

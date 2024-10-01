@@ -25,14 +25,12 @@ export const getAccommodation = async (req: Request, res: Response): Promise<voi
 export const getAccommodationPic = async (req: Request, res: Response): Promise<void> => {
   try {
     const { photo_reference } = req.query;
-    console.log('PHOTO--------------',photo_reference)
     if (!photo_reference) {
       res.status(400).json({ error: 'Photo reference is required' });
       return;
     }
     const imageUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo_reference}&key=${apiKey}`;
     const response = await fetch(imageUrl);
-    console.log('PHOTO--------------',response)
     if (response.ok) {
       res.status(200).json({data: response.url}); 
     } else {
