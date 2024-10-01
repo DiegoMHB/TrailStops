@@ -37,7 +37,6 @@ const addMarker = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             walkingSpeed: settings.speed,
             distanceMeasure: settings.distance,
         });
-        console.log(newMarker);
         let response = yield newMarker.save();
         for (const key in updatedMarkers) {
             response = yield schema_1.UserMarkers.findOneAndUpdate({ _id: key }, {
