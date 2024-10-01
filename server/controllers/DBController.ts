@@ -5,7 +5,7 @@ import { AddMarkerRequestBody } from '../interfaces/marker-interfaces';
 export const getMarkers = async (req: Request, res: Response): Promise<void> => {
   try {
     const { user_id } = req.query as { user_id: string };
-    const response = await UserMarkers.find({user_id: user_id})
+    const response = await UserMarkers.find({ user_id: user_id })
     const positions = response.map(marker => marker);
     res.status(200).json(positions);
   } catch (error) {
@@ -27,7 +27,7 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
       walkingSpeed: settings.speed,
       distanceMeasure: settings.distance,
     });
-    let response :any = await newMarker.save();
+    let response: any = await newMarker.save();
     for (const key in updatedMarkers) {
       response = await UserMarkers.findOneAndUpdate(
         { _id: key },
@@ -47,7 +47,7 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
 export const updateAllMarkers = async (req: Request, res: Response): Promise<void> => {
   try {
     // const { markers } = req.body;
-    const { markers }: { markers: { [key: string]: { _id: string; [key: string]: any } } } = req.body;
+    const { markers }: { markers: { [key: string]: { _id: string;[key: string]: any } } } = req.body;
     const updatePromises = Object.keys(markers).map(async (key) => {
       const marker = markers[key];
       return await UserMarkers.updateOne({ _id: marker._id }, marker);
@@ -62,7 +62,7 @@ export const updateAllMarkers = async (req: Request, res: Response): Promise<voi
 export const removeMarker = async (req: Request, res: Response): Promise<void> => {
   try {
     const { user_id, _id } = req.body;
-    const response = await UserMarkers.deleteOne({user_id:user_id, _id:_id})
+    const response = await UserMarkers.deleteOne({ user_id: user_id, _id: _id })
     res.status(200).json(response);
   } catch (error) {
     res.status(500).send(`Server Error3: ${error}`);
@@ -73,14 +73,14 @@ export const removeMarker = async (req: Request, res: Response): Promise<void> =
 export const addUser = async (req: Request, res: Response): Promise<void> => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
-    res.status(400).json({ message: 'All fields required '})
+    res.status(400).json({ message: 'All fields required ' })
     return;
   }
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-        res.status(400).json({ error: 'User with this email already exists' });
-        return;
+      res.status(400).json({ error: 'User with this email already exists' });
+      return;
     }
     const newUser = new User({ name, email, password });
     const response = await newUser.save();
@@ -91,14 +91,17 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
 }
 
 export const getUser = async (req: Request, res: Response): Promise<void> => {
-  const email = req.query.email as string;
+  const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) {
       res.status(404).json({ message: 'User not found' });
       return;
+    };
+    if (password === user.password) {      
+      user.password = "";
+      res.status(200).json(user)
     }
-    res.status(200).json(user);
   } catch (error) {
     res.status(500).send(`Server Error: ${error}`);
   }
@@ -106,9 +109,9 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
 
 export const getAccommodation = async (req: Request, res: Response): Promise<void> => {
   try {
-  const { user_id, markerId } = req.query;
-  const accommodation = await UserMarkers.findOne({ user_id: user_id, _id:markerId });
-  res.status(200).json(accommodation);
+    const { user_id, markerId } = req.query;
+    const accommodation = await UserMarkers.findOne({ user_id: user_id, _id: markerId });
+    res.status(200).json(accommodation);
   } catch (error) {
     res.status(500).send(`Server Error5: ${error}`);
   }
@@ -117,7 +120,7 @@ export const getAccommodation = async (req: Request, res: Response): Promise<voi
 export const addAccommodation = async (req: Request, res: Response): Promise<void> => {
   try {
     const { user_id, hotel, markerId } = req.body;
-    const response = await UserMarkers.updateOne({user_id: user_id, _id: markerId}, {hotel: hotel});
+    const response = await UserMarkers.updateOne({ user_id: user_id, _id: markerId }, { hotel: hotel });
     res.status(200).json(response);
   } catch (error) {
     res.status(500).send(`Server Error6: ${error}`);

@@ -38,7 +38,6 @@ const MapComponent = () => {
   });
 
   const setGpxRouteFunc = (route: File) => {
-    console.log(route)
     setGpxRoute(route);
   };
 
@@ -49,7 +48,6 @@ const MapComponent = () => {
           acc[curr._id] = curr;
           return acc;
         }, {});
-        console.log(dataOut);
         setMarkers(dataOut);
         if (dataOut && Object.keys(dataOut).length > 0) {
           const firstMarker = dataOut[Object.keys(dataOut)[0]];

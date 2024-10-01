@@ -14,7 +14,7 @@ router.delete('/mapMarkers', DB.removeMarker)
 
 router.post('/user', DB.addUser)
 
-router.get('/user', DB.getUser)
+router.post('/login', DB.getUser)
 
 router.get('/accommodation', DB.getAccommodation)
 
