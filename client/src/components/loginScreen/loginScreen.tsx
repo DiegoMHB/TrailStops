@@ -30,11 +30,11 @@ function LoginScreen() {
     setIsSubmitting(true);
     setErrorMessage("");
 
-    DBService.getUser(formData.email)//DIEGO: I would compare password and email in the server, and response with the user data
+    DBService.getUser(formData.email, formData.password)//DIEGO: I would compare password and email in the server, and response with the user data
       .then((data) => {
-       
+       console.log(data)
         if (data) {
-          if (data.password === formData.password) {
+          if (data.password === "") {
             navigate('/map', { state: { email: formData.email } });//make this a :param??
           } else {
             setErrorMessage("Unknown credentials");
@@ -88,7 +88,7 @@ function LoginScreen() {
           {isSubmitting ? "Logging in..." : "Login"}
         </Button>
       </FormControl>
-      <a href="/register">Don't have an account? Register</a>
+      <a href="/register"><p>Don't have an account? Register</p></a>
       </div>
     </div>
   );
