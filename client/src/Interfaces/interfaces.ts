@@ -36,7 +36,7 @@ export interface MarkerInterface {
 };
 
 export interface DynamicMarkers  {
-  [_id: string]: MarkerInterface; // Aquí, las claves son strings y los valores son numbers
+  [_id: string]: MarkerInterface; 
 };
 
 //DB SERVICE

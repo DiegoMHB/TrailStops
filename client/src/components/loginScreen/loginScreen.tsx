@@ -27,13 +27,12 @@ function LoginScreen() {
       });
       return; // Stop submission if fields are empty
     }
-
     setIsSubmitting(true);
     setErrorMessage("");
 
-    
     DBService.getUser(formData.email)//DIEGO: I would compare password and email in the server, and response with the user data
       .then((data) => {
+       
         if (data) {
           if (data.password === formData.password) {
             navigate('/map', { state: { email: formData.email } });//make this a :param??
@@ -59,7 +58,9 @@ function LoginScreen() {
           label="Email"
           variant="outlined"
           value={formData.email}
-          onChange={(e)  => setFormData({ ...formData, email: e.target.value })}
+          onChange={(e)  => {
+            setFormData({ ...formData, email: e.target.value });
+            }}
           error={formErrors.email}
           helperText={formErrors.email ? 'Email is required' : ''}
           margin='normal'
