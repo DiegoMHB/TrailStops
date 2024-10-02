@@ -95,19 +95,21 @@ function SearchResultScreen({
               </div>
             ))
               
-          ) : loading ? <p>Accommodation loading...</p> : (
-            <p>No accommodation found.</p>
+          ) : loading ? <p className="result-msg">Accommodation loading...</p> : (
+            <p className="result-msg">No accommodation found.</p>
           )}
         </ul>
-        <p className='wildOption'>Wild Camping</p>
-        <Button variant='contained' onClick={() => updateAccommodation("Wild Camping")}>Select</Button>
+        <div id="wildOptionBox">
+          <p className='wildOption'>Wild Camping</p>
+          <Button variant='contained' onClick={() => updateAccommodation("Wild Camping")}>Select</Button>
+        </div>
         </div>
       ) : (
         <p>No closest point data available.</p>
       )}
-        <div>
+        <div className="searchResultTripData">
         <h1>Stop {marker.order}</h1>
-        <h3 className="stopHeading">&larr; Previous Stop</h3>
+        <h3 className="stopHeading"><span id="prev-stop-heading">&larr; Previous Stop</span></h3>
         <table className="timeDistanceTable">
           <tr className="tableHeadings">
             <th>Distance</th><th>Time</th>
@@ -117,7 +119,7 @@ function SearchResultScreen({
             <td>{marker.prevDist?.time ? `${marker.prevDist.time} hours` : 'N/A'}</td>
           </tr>
         </table>
-        <h3 className="stopHeading">Next Stop &rarr;</h3>
+        <h3 className="stopHeading"><span id="next-stop-heading">Next Stop &rarr;</span></h3>
         <table className="timeDistanceTable">
           <tr className="tableHeadings">
             <th>Distance</th><th>Time</th>
@@ -127,9 +129,9 @@ function SearchResultScreen({
             <td>{marker.nextDist?.time ? `${marker.nextDist.time} hours` : 'N/A'}</td>
           </tr>
         </table>
-        <p><span className="detailHeading">Selected Accommodation:</span>
-        <span className="detailText">{selectedAccommodation === "" ? " None" : ` ${selectedAccommodation}`}</span>
-      </p>
+        <div id="selectedAccommodationContainer"><span id="selectedHeading">Selected Accommodation</span>
+          <span id="selectedText">{selectedAccommodation === "" ? " None" : ` ${selectedAccommodation}`}</span>
+        </div>
       <div className="button-container">
         <Button variant='contained' style={{marginRight: "10px"}} onClick={() => closeOverlay()}>Back</Button>
         <Button variant='contained' onClick={() => deleteMarker(marker._id)}>Delete Marker</Button>
