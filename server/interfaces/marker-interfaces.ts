@@ -19,7 +19,7 @@ export interface Marker {
 
   export interface Position {
     lat: number;
-    lng: number;
+    lon: number;
   }
 
   export interface UpdatedMarkers {

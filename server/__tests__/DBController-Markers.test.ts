@@ -131,7 +131,6 @@ describe('PUT /updateAllMarkers', () => {
           ]));
         })
       })
-
 })
 
 describe('PUT /accommodation', () => {
@@ -167,9 +166,9 @@ describe('GET /accommodation', () => {
           const res: Partial<Response> = mockResponse();
           mockingoose(UserMarkers).toReturn(req.body, 'save');
           await addMarker(req as Request, res as Response);
-          mockingoose(UserMarkers).toReturn(req.body, 'find');
-          await UserMarkers.find({ _id: req.body._id, user_d: req.body.user_id });
-          expect(res.status).toHaveBeenCalledWith(200);
+          mockingoose(UserMarkers).toReturn(req.body.marker, 'find');
+          const foundMarker = await UserMarkers.find({ _id: req.body._id, user_id: req.body.user_id });
+          expect(foundMarker).toEqual(expect.objectContaining({hotel: req.body.marker.hotel}));
         })
       })
 
