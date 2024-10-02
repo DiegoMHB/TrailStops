@@ -1,12 +1,10 @@
 import * as mockingoose from 'mockingoose';
 import { User, UserMarkers } from '../models/schema';
-import { addUser, getUser, addMarker, getMarkers, removeMarker } from '../controllers/DBController';
+import { addMarker, removeMarker, updateAllMarkers, addAccommodation, getAccommodation } from '../controllers/DBController';
 import { Request, Response } from 'express';
-import fetchMock from 'jest-fetch-mock';
-import { Marker } from '../interfaces/marker-interfaces';
 import {mockMarkers,  mockUpdatedMarkers, mockSettings} from '../__mocks__/mocks.ts'
 
-// Please ignore the red underline under mockingoose as the tests work fine.
+// Please ignore the red line under mockingoose as this is an issue with the library and the tests work fine.
 
 const mockResponse = (): Partial<Response> => {
     const res: Partial<Response> = {}; // Use Partial to allow optional properties
@@ -106,25 +104,57 @@ describe('DELETE /mapMarkers', () => {
           expect(foundMarkers).toEqual([]);
         })
       })
-
 })
 
 describe('PUT /updateAllMarkers', () => {
 
+  const otherReq: Partial<Request> = {body: {
+    _id: mockMarkers[0]._id,
+    user_id: mockMarkers[0].user_id,
+    marker: mockMarkers[1],
+    updatedMarkers: mockUpdatedMarkers[1],
+  }}
+
       describe('given valid markers', () => {
         test('update markers in the database', async () => {
-
+          const res: Partial<Response> = mockResponse();
+          mockingoose(UserMarkers).toReturn(req.body, 'save');
+          await addMarker(req as Request, res as Response);
+          mockingoose(UserMarkers).toReturn(otherReq.body, 'updateOne');
+          await updateAllMarkers(otherReq as Request, res as Response);
+          mockingoose(UserMarkers).toReturn([otherReq.body.marker], 'find');
+          const foundMarker = await UserMarkers.find({ _id: req.body._id });
+          expect(foundMarker).toEqual(expect.arrayContaining([
+            expect.objectContaining({
+              position: otherReq.body.marker.position,
+            }),
+          ]));
         })
       })
 
 })
 
-
 describe('PUT /accommodation', () => {
+
+  const otherReq: Partial<Request> = {body: {
+    _id: mockMarkers[0]._id,
+    user_id: mockMarkers[0].user_id,
+    marker: mockMarkers[1],
+    updatedMarkers: mockUpdatedMarkers[1],
+  }}
 
       describe('given a marker id and accommodation', () => {
         test('should update user with selected accommodation', async () => {
-
+          const res: Partial<Response> = mockResponse();
+          mockingoose(UserMarkers).toReturn(req.body, 'save');
+          await addMarker(req as Request, res as Response);
+          mockingoose(UserMarkers).toReturn(otherReq.body, 'updateOne');
+          await addAccommodation(otherReq as Request, res as Response);
+          mockingoose(UserMarkers).toReturn(otherReq.body.marker, 'find');
+          const foundMarker = await UserMarkers.find({ _id: req.body._id });
+          expect(foundMarker).toEqual(expect.objectContaining({
+            hotel: otherReq.body.marker.hotel,
+          }));
         })
       })
 
@@ -132,22 +162,15 @@ describe('PUT /accommodation', () => {
 
 describe('GET /accommodation', () => {
 
-      describe('given a valid marker', () => {
-        test('should get related accommodation info', async () => {
-
+      describe('given a valid marker id and user id', () => {
+        test('should return the marker with all related info', async () => {
+          const res: Partial<Response> = mockResponse();
+          mockingoose(UserMarkers).toReturn(req.body, 'save');
+          await addMarker(req as Request, res as Response);
+          mockingoose(UserMarkers).toReturn(req.body, 'find');
+          await UserMarkers.find({ _id: req.body._id, user_d: req.body.user_id });
+          expect(res.status).toHaveBeenCalledWith(200);
         })
       })
 
 })
-
-
-          // fetchMock.mockResponseOnce(JSON.stringify({
-          //   _id: mockMarker._id,
-          //   user_id: mockUserId,
-          //   position: mockMarker.position,
-          //   hotel: mockMarker.hotel,
-          //   nextDist: mockMarker.nextDist,
-          //   prevDist: mockMarker.prevDist,
-          //   order: mockMarker.order
-          // }));
-          // mocks the response for a fetch request and converts to JSON
