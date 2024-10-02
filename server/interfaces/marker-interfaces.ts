@@ -21,6 +21,13 @@ export interface Marker {
     lat: number;
     lng: number;
   }
+
+  export interface UpdatedMarkers {
+    position: Position;
+    prevDist: { dist: number, time: number },
+    nextDist: { dist: number, time: number },
+    order: number;
+  };
   
   export interface AddMarkerRequestBody {
     _id: string;
