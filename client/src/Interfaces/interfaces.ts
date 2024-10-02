@@ -28,7 +28,7 @@ export interface MarkerInterface {
   hotel: string,
   prevDist: Distance | null,
   nextDist: Distance | null,
-  position: LatLng,
+  position: PointLngLat,
   walkingSpeed: number,
   distanceMeasure: string, //settingsData.distance. Should be measure (km or miles)
   name?: string,

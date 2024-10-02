@@ -18,7 +18,6 @@ function LoginScreen() {
     //DIEGO: if required property in the form element, why do we need this?:
     const emailError = formData.email === "";
     const passwordError = formData.password === "";
-
     // If any field is empty, show the error message
     if (emailError || passwordError) {
       setFormErrors({
@@ -29,12 +28,11 @@ function LoginScreen() {
     }
     setIsSubmitting(true);
     setErrorMessage("");
-
+    
     DBService.getUser(formData.email, formData.password)//DIEGO: I would compare password and email in the server, and response with the user data
       .then((data) => {
-       console.log(data)
         if (data) {
-          if (data.password === "") {
+          if ("email" in data && "_id" in data) {
             navigate('/map', { state: { email: formData.email } });//make this a :param??
           } else {
             setErrorMessage("Unknown credentials");
@@ -84,6 +82,7 @@ function LoginScreen() {
           variant="contained"
           onClick={handleSubmit}
           disabled={isSubmitting}
+          name="Login"
         >
           {isSubmitting ? "Logging in..." : "Login"}
         </Button>

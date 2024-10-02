@@ -2,33 +2,25 @@
 import LoginScreen from "./loginScreen";
 import { render, screen, fireEvent } from "@testing-library/react";
 // import userEvent from "@testing-library/user-event";
-// import getUser from "../../services/DBService";
 import { MemoryRouter as Router } from "react-router-dom";
 
-// jest.mock("../../services/DBService.ts", () => ({
-//   getUser: mockGetUser,
-// }));
+const mockGetUser = jest.fn().mockImplementation(() => ({
+  _id: "abcd",
+  email: "dmhb17@gmail.com",
+}));
 
-// const mockGetUser = jest.fn((email) => ({
-//   email: "dmhb17@gmail.com",
-//   password: "1234",
-// }));
-
+jest.doMock("../../services/DBService", () => ({
+  getUser: mockGetUser,
+}));
 const mockedUsedNavigate = jest.fn();
-
 jest.doMock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
   useNavigate: () => mockedUsedNavigate,
 }));
 
 
-
 it("Should create an element with a form, and a link to Register", async () => {
-  render(
-    <Router>
-      <LoginScreen />
-    </Router>
-  );
+  render(<Router><LoginScreen/></Router>);
 
   const emailInput = screen.getByLabelText(/Email/);
   const passwordInput = screen.getByLabelText(/Password/);
@@ -50,10 +42,12 @@ it("Should create an element with a form, and a link to Register", async () => {
 //     </Router>
 //   );
 
-//   const emailInput = screen.getByLabelText(/Email/);
+//   const passwordInput = screen.getByLabelText(/Password/i);
+//   const emailInput = screen.getByLabelText(/Email/i);
 //   const submitBtn = screen.getByRole("button", { name: /Login/ });
 
+//   fireEvent.change(passwordInput, { target: { value: credentials.password } });
 //   fireEvent.change(emailInput, { target: { value: credentials.email } });
 //   fireEvent.click(submitBtn);
-//   expect(mockGetUser).toHaveBeenCalledWith(credentials.email);
+//   expect(mockGetUser).toHaveBeenCalledTimes(1);
 // });

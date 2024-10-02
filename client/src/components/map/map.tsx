@@ -29,7 +29,8 @@ const MapComponent = () => {
   const gpxFile = "/WHW.gpx";
   const [gpxRoute, setGpxRoute] = useState<File>();
   const [markers, setMarkers] = useState<DynamicMarkers>({});
-  const [selectedMarker, setSelectedMarker] = useState<MarkerInterface | null>();
+  const [selectedMarker, setSelectedMarker] =
+    useState<MarkerInterface | null>();
   const [detailsClicked, setDetailsClicked] = useState(false);
   const [settingsClicked, setSettingsClicked] = useState<Boolean>(false);
   const [settingsData, setSettingsData] = useState({
@@ -135,6 +136,7 @@ const MapComponent = () => {
     <>
       <div className="mapContainer">
         <MapContainer
+          data-testid="mapContainer"
           minZoom={9}
           style={{ height: "100vh", width: "100%" }}
           zoomControl={false}
@@ -177,9 +179,12 @@ const MapComponent = () => {
               alt="line render of a settings cog icon"
               onClick={() => setSettingsClicked(true)}
             />
-            {Object.keys(markers).length > 0 &&
-            <DetailSummary markers={markers ||{}} />
-          }
+            {Object.keys(markers).length > 0 && (
+              <DetailSummary
+                data-testid="detailSummary"
+                markers={markers || {}}
+              />
+            )}
           </>
         )}
       </div>
@@ -195,14 +200,14 @@ const MapComponent = () => {
             height: "100%",
           }}
         >
-          {selectedMarker.position &&
-          <SearchResultScreen
-            marker={selectedMarker}
-            markers={markers}
-            setMarkers={setMarkers}
-            closeOverlay={closeSearchOverlay}
-          />
-        }
+          {selectedMarker.position && (
+            <SearchResultScreen
+              marker={selectedMarker}
+              markers={markers}
+              setMarkers={setMarkers}
+              closeOverlay={closeSearchOverlay}
+            />
+          )}
         </div>
       )}
       {detailsClicked && (
