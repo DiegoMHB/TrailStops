@@ -4,6 +4,7 @@ import createServer from '../server';
 import { User, UserMarkers } from '../models/schema';
 import { addUser, getUser, addMarker } from '../controllers/DBController';
 import { Request, Response } from 'express';
+import {mockMarkers,  mockUpdatedMarkers, mockSettings} from '../__mocks__/mocks.ts'
 
 const request = supertest;
 const app = createServer();
