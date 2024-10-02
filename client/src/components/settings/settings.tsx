@@ -1,5 +1,5 @@
 import "./settings.css";
-import { Select, FormControl, Button, MenuItem } from "@mui/material";
+import { Select, FormControl, Button, MenuItem, SelectChangeEvent } from "@mui/material";
 import DBService from "../../services/DBService";
 import routeCalculation from "../../helperFunctions/routeCalculation";
 import { useEffect } from "react";
@@ -41,7 +41,7 @@ function Settings({
     updateMarkers();
   }, [settingsData, markers, setMarkers]); // Trigger on settingsData change
 
-  const changeSpeedSetting = (event: any) => {
+  const changeSpeedSetting = (event: SelectChangeEvent<number>) :void => {
     setSettingsData({ ...settingsData, speed: Number(event.target.value) });
   };
 

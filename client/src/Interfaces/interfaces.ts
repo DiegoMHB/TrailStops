@@ -32,7 +32,8 @@ export interface MarkerInterface {
   walkingSpeed: number,
   distanceMeasure: string, //settingsData.distance. Should be measure (km or miles)
   name?: string,
-  order?:number
+  order?:number,
+  prevIndex?:number
 };
 
 export interface DynamicMarkers  {
@@ -115,4 +116,17 @@ export interface PlusCode {
 
 export interface ErrorResponse {
   error: string;
+}
+
+export interface UpdateResult {
+  acknowledged: boolean;
+  matchedCount: number;
+  modifiedCount: number;
+  upsertedCount: number;
+  upsertedId: string | null;
+}
+
+export interface DeleteResult {
+  acknowledged: boolean;
+  deletedCount: number;
 }

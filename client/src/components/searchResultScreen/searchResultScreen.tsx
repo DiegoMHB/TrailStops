@@ -55,8 +55,7 @@ function SearchResultScreen({
       }
   }, []);
 
-  function updateAccommodation (accommodation:any) {
-    console.log(accommodation)
+  function updateAccommodation (accommodation:string) {
     setSelectedAccommodation(accommodation)
     const updatedMarkers = { ...markers, [marker._id]:{...marker, hotel:accommodation}};
     setMarkers(updatedMarkers);
@@ -69,7 +68,7 @@ function SearchResultScreen({
     speed: 3 
   };
 
-  async function deleteMarker (markerId:any) {
+  async function deleteMarker (markerId:string) {
     DBService.removeMarker("aidan@test.com", markerId);
     const updatedMarkers = { ...markers };
     delete updatedMarkers[markerId];

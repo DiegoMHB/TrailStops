@@ -39,9 +39,6 @@ describe('GET /accommodationPic', () => {
 
   });
 
-  describe('GET /accommodation', () => {
-
-})
 
     //     it('should save geographical markers to the database', async() => {
 

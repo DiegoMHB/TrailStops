@@ -1,7 +1,7 @@
 import "./map.css";
 import { useEffect, useState } from "react";
 import { Marker, MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import L from "leaflet";
+import L, { LeafletMouseEvent } from "leaflet";
 import "leaflet-gpx";
 import "leaflet/dist/leaflet.css";
 import GPXLayer from "../gpxMapLayer/gpxMapLayer";
@@ -14,7 +14,7 @@ import DetailSummary from "../detailSummary/detailSummary";
 import SearchResultScreen from "../searchResultScreen/searchResultScreen";
 import Settings from "../settings/settings";
 import TripDetailsScreen from "../tripDetailsScreen/tripDetailsScreen";
-import { DynamicMarkers, MarkerInterface } from "../../Interfaces/interfaces";
+import { CalculationSettings, DynamicMarkers, MarkerInterface } from "../../Interfaces/interfaces";
 
 // set icon for placed markers
 const defaultIcon = L.icon({
@@ -28,12 +28,11 @@ const defaultIcon = L.icon({
 const MapComponent = () => {
   const gpxFile = "/WHW.gpx";
   const [gpxRoute, setGpxRoute] = useState<File>();
-  const [markers, setMarkers] = useState<DynamicMarkers>({});
-  const [selectedMarker, setSelectedMarker] =
-    useState<MarkerInterface | null>();
-  const [detailsClicked, setDetailsClicked] = useState(false);
+  const [markers, setMarkers] = useState<DynamicMarkers | null>({});
+  const [selectedMarker, setSelectedMarker] = useState<MarkerInterface | null>();
+  const [detailsClicked, setDetailsClicked] = useState  <Boolean> (false);
   const [settingsClicked, setSettingsClicked] = useState<Boolean>(false);
-  const [settingsData, setSettingsData] = useState({
+  const [settingsData, setSettingsData] = useState <CalculationSettings>({
     distance: "km",
     speed: 3,
   });
@@ -43,9 +42,10 @@ const MapComponent = () => {
   };
 
   useEffect(() => {
-    DBService.getMarkers("aidan@test.com").then((data) => {
+    DBService.getMarkers("aidan@test.com")
+    .then((data) => {
       if (data) {
-        const dataOut: any = data.reduce((acc: any, curr: any) => {
+        const dataOut: DynamicMarkers = data.reduce((acc: DynamicMarkers, curr: MarkerInterface) => {
           acc[curr._id] = curr;
           return acc;
         }, {});
@@ -66,7 +66,7 @@ const MapComponent = () => {
   // handler from marker being added to map
   const MapClickHandler = () => {
     useMapEvents({
-      click: async (e: any) => {
+      click: async (e: LeafletMouseEvent) => {
         const { lat, lng } = e.latlng; // get position of click
         if (gpxRoute) {
           const closestPoint = closestPoints([lat, lng]); // snap clicked position to route
@@ -85,11 +85,11 @@ const MapComponent = () => {
             ...markers,
             [newMarker._id]: newMarker,
           };
-          const calculatedMarkers = await routeCalculation(
+          const calculatedMarkers : DynamicMarkers = await routeCalculation(
             Object.values(updatedMarkers),
             settingsData
           );
-          setMarkers(calculatedMarkers);
+          setMarkers(calculatedMarkers );
           DBService.addMarker(
             "aidan@test.com",
             calculatedMarkers[newMarker._id],
@@ -107,29 +107,12 @@ const MapComponent = () => {
   };
 
   // handler for placed marker being clicked
-  const MarkerClickHandler = (marker: any): void => {
+  const MarkerClickHandler = (marker: MarkerInterface): void => {
     if (marker) {
       setSelectedMarker(marker);
     } else {
       console.error("Marker not found in state");
     }
-  };
-
-  // handler from tripDetails button being clicked
-  const TripDetailsClickHandler = () => {
-    setDetailsClicked(true);
-  };
-
-  const closeSearchOverlay = () => {
-    setSelectedMarker(null); // Hide the overlay
-  };
-
-  const closeDetailsOverlay = () => {
-    setDetailsClicked(false); // Hide the overlay
-  };
-
-  const closeSettingsOverlay = () => {
-    setSettingsClicked(false); // Hide the overlay
   };
 
   return (
@@ -169,7 +152,7 @@ const MapComponent = () => {
             <Button
               variant="contained"
               className="tripDetails"
-              onClick={TripDetailsClickHandler}
+              onClick={()=>setDetailsClicked(true)}
             >
               Trip Details
             </Button>
@@ -179,7 +162,7 @@ const MapComponent = () => {
               alt="line render of a settings cog icon"
               onClick={() => setSettingsClicked(true)}
             />
-            {Object.keys(markers).length > 0 && (
+            {Object.keys(markers as DynamicMarkers).length > 0 && (
               <DetailSummary
                 data-testid="detailSummary"
                 markers={markers || {}}
@@ -203,9 +186,9 @@ const MapComponent = () => {
           {selectedMarker.position && (
             <SearchResultScreen
               marker={selectedMarker}
-              markers={markers}
+              markers={markers as DynamicMarkers}
               setMarkers={setMarkers}
-              closeOverlay={closeSearchOverlay}
+              closeOverlay={()=>setSelectedMarker(null)}
             />
           )}
         </div>
@@ -223,8 +206,8 @@ const MapComponent = () => {
           }}
         >
           <TripDetailsScreen
-            closeOverlay={closeDetailsOverlay}
-            markers={markers}
+            closeOverlay={()=>setDetailsClicked(false)}
+            markers={markers as DynamicMarkers}
             setSelectedMarker={setSelectedMarker}
           />
         </div>
@@ -242,11 +225,11 @@ const MapComponent = () => {
           }}
         >
           <Settings
-            closeOverlay={closeSettingsOverlay}
+            closeOverlay={()=>setSettingsClicked(false)}
             settingsData={settingsData}
             setSettingsData={setSettingsData}
             setSettingsClicked={setSettingsClicked}
-            markers={markers}
+            markers={markers as DynamicMarkers}
             setMarkers={setMarkers}
           />
         </div>

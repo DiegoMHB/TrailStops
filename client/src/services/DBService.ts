@@ -1,4 +1,4 @@
-import { CalculationSettings, DynamicMarkers, MarkerInterface, User } from "../Interfaces/interfaces";
+import { CalculationSettings, DeleteResult, DynamicMarkers, MarkerInterface, UpdateResult, User } from "../Interfaces/interfaces";
 
 
 async function getMarkers(user_id: string)
@@ -95,7 +95,7 @@ async function getAccommodation(email: string, markerId: string)
 }
 
 async function addAccommodation(email: string, hotel: string, markerId: string)
-  : Promise<void | any> { //receives a Mongo object that confirms if the hotel was added to the marker
+  : Promise<void | UpdateResult> { //receives a Mongo object that confirms if the hotel was added to the marker
   try {
     const response = await fetch('http://localhost:3001/accommodation', {
       method: 'PUT',
@@ -114,7 +114,7 @@ async function addAccommodation(email: string, hotel: string, markerId: string)
 
 // TODO Fix bug where it marker is only delete after second attempt sometimes.
 async function removeMarker(userId: string, markerId: string)
-  : Promise<void | any> { //receives a Mongo object that confirms if the hotel was added to the marker 
+  : Promise<void | DeleteResult> { //receives a Mongo object that confirms if the hotel was added to the marker 
   try {
     const response = await fetch('http://localhost:3001/mapMarkers', {
       method: 'DELETE',

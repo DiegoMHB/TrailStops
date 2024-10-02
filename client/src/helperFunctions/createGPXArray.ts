@@ -17,11 +17,12 @@ export default async function createGPXArray(url: string): Promise<PointLngLat[]
     const latLngArray: PointLngLat[] = [];
 
     for (let i = 0; i < trackPoints.length; i++) {
-      const lat: any = trackPoints[i].getAttribute("lat");
-      const lon: any = trackPoints[i].getAttribute("lon");
+      const lat: string|null = trackPoints[i].getAttribute("lat");
+      const lon: string|null = trackPoints[i].getAttribute("lon");
 
+      if(lat && lon){
       latLngArray.push({ lat: parseFloat(lat), lng: parseFloat(lon) });
-    }
+    }}
 
     return latLngArray;
   } catch (error) {

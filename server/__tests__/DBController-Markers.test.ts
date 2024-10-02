@@ -109,36 +109,36 @@ describe('DELETE /mapMarkers', () => {
 
 })
 
-describe('PUT /updateAllMarkers', () => {
+// describe('PUT /updateAllMarkers', () => {
 
-      describe('given valid markers', () => {
-        test('update markers in the database', async () => {
+//       describe('given valid markers', () => {
+//         test('update markers in the database', async () => {
 
-        })
-      })
+//         })
+//       })
 
-})
+// })
 
 
-describe('PUT /accommodation', () => {
+// describe('PUT /accommodation', () => {
 
-      describe('given a marker id and accommodation', () => {
-        test('should update user with selected accommodation', async () => {
+//       describe('given a marker id and accommodation', () => {
+//         test('should update user with selected accommodation', async () => {
 
-        })
-      })
+//         })
+//       })
 
-})
+// })
 
-describe('GET /accommodation', () => {
+// describe('GET /accommodation', () => {
 
-      describe('given a valid marker', () => {
-        test('should get related accommodation info', async () => {
+//       describe('given a valid marker', () => {
+//         test('should get related accommodation info', async () => {
 
-        })
-      })
+//         })
+//       })
 
-})
+// })
 
 
           // fetchMock.mockResponseOnce(JSON.stringify({

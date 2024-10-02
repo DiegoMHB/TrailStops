@@ -1,8 +1,9 @@
-import { PointLngLat } from '../Interfaces/interfaces'
+import { MarkerInterface, PointLngLat } from '../Interfaces/interfaces'
 
 // check that the current marker falls between its surrounding route points
 // lats & lngs either in a positive or negative direction
-export default function isMarkerBetweenRoutePoints(marker: any, routePoint1: PointLngLat, routePoint2: PointLngLat) { //routePoint1 & 2: TYPE OR INTERFACE
+export default function isMarkerBetweenRoutePoints(marker: MarkerInterface, routePoint1: PointLngLat, routePoint2: PointLngLat) {
+  
   return (
     ((marker.position.lng >= routePoint1.lng && marker.position.lng <= routePoint2.lng) ||
       (marker.position.lng <= routePoint1.lng && marker.position.lng >= routePoint2.lng)) &&
