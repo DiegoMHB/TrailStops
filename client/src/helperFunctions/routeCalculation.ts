@@ -81,7 +81,6 @@ async function routeCalculation
     acc[curr._id] = curr;
     return acc;
   }, {});
-  console.log('output', output)
   return output;
 }
 
