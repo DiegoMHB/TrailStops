@@ -29,8 +29,7 @@ export interface MarkerInterface {
     lng: number;
   },
   walkingSpeed: number,
-  distanceMeasure: string, //settingsData.distance. Should be measure (km or miles)
-  name?: string,
+  distanceMeasure: string,
   order?:number,
   prevIndex?:number
 };
@@ -38,8 +37,6 @@ export interface MarkerInterface {
 export interface DynamicMarkers  {
   [_id: string]: MarkerInterface; 
 };
-
-//DB SERVICE
 
 export interface User {
   email: string,

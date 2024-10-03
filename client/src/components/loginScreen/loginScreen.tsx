@@ -29,11 +29,11 @@ function LoginScreen() {
     setIsSubmitting(true);
     setErrorMessage("");
     
-    DBService.getUser(formData.email, formData.password)//DIEGO: I would compare password and email in the server, and response with the user data
+    DBService.getUser(formData.email, formData.password)
       .then((data) => {
         if (data) {
           if ("email" in data && "_id" in data) {
-            navigate('/map', { state: { email: formData.email } });//make this a :param??
+            navigate('/map', { state: { email: formData.email } })
           } else {
             setErrorMessage("Unknown credentials");
           }

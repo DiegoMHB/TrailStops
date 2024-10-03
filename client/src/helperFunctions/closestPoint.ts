@@ -8,11 +8,11 @@ function closestPoints(pointCoords: number[]): number[] {
   const coordinates = routeData.coordinates
 
   if (pointCoords[0] < coordinates[0][1]) {
-    alert('Are you sure you want to place a stop there?')
+    alert('Please choose a stop on your trail')
     return coordinates[0]
   }
   if (pointCoords[0] > coordinates[(coordinates.length) - 1][1]) {
-    alert('Are you sure you want to place there?')
+    alert('Please choose a stop on your trail')
     return coordinates[(coordinates.length) - 1]
   }
 

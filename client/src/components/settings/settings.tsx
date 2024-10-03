@@ -45,15 +45,7 @@ function Settings({
     setSettingsData({ ...settingsData, speed: Number(event.target.value) });
   };
 
-  // const changeDistanceSetting = async (event: any) => {
-  //   setSettingsData({ ...settingsData, distance: event.target.value });
-  //   const updatedMarkers = await routeCalculation(Object.values(markers), {
-  //     ...settingsData,
-  //     distance: event.target.value,
-  //   });
-  //   DBService.updateAllMarkers(updatedMarkers);
-  //   setMarkers(updatedMarkers);
-  // };
+
 
   return (
     <div style={{ marginBottom: "10px" }} className="settingsScreen">
@@ -67,12 +59,7 @@ function Settings({
             <MenuItem value="5">5Kmph - Lightning</MenuItem>
           </Select>
         </FormControl>
-        {/* <FormControl>
-          <Select value={settingsData.distance} onChange={changeDistanceSetting}>
-            <MenuItem value="km">Kilometers</MenuItem>
-            <MenuItem value="m">Miles</MenuItem>
-          </Select>
-        </FormControl> */}
+
       </form>
       <Button variant="contained" className="backButton" onClick={closeOverlay}>
         Back

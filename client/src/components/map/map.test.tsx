@@ -32,8 +32,14 @@ jest.mock("../../services/DBService");
 
 jest.mock("react-leaflet", () => ({
   ...jest.requireActual("react-leaflet"),
-  useMapEvents: () => jest.fn()
+  useMapEvents: () => jest.fn(),
 }));
+
+const MapCompo = (
+  <Router>
+    <Map />
+  </Router>
+);
 
 describe("map", () => {
   beforeEach(() => {
@@ -48,41 +54,25 @@ describe("map", () => {
   });
 
   it("Should render map", async () => {
-    render(
-      <Router>
-        <Map />
-      </Router>
-    );
+    render(MapCompo);
     const mapComponent = document.querySelector(".leaflet-pane");
     expect(mapComponent).toBeInTheDocument();
   });
 
   it("Should render trip-details button", async () => {
-    render(
-      <Router>
-        <Map />
-      </Router>
-    );
+    render(MapCompo);
     const settings = document.querySelector(".settings");
     expect(settings).toBeInTheDocument();
   });
 
   it("Should render settings button", async () => {
-    render(
-      <Router>
-        <Map />
-      </Router>
-    );
+    render(MapCompo);
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
   });
 
   it("Should render tripDetailsScreen when the button is clicked", async () => {
-    render(
-      <Router>
-        <Map />
-      </Router>
-    );
+    render(MapCompo);
     const button = screen.getByRole("button");
     fireEvent.click(button);
     const tripDetailsScreen = screen.getByText("Trip Details");
@@ -90,15 +80,8 @@ describe("map", () => {
   });
 
   it("Should render a route", async () => {
-    render(
-      <Router>
-        <Map />
-      </Router>
-    );
+    render(MapCompo);
     const route = screen.getByTestId("gpx-layer-mock");
     expect(route).toBeInTheDocument();
   });
-
-
-
 });

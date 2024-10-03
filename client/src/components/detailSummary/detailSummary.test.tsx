@@ -2,7 +2,8 @@ import DetailSummary from "./detailSummary";
 import { render, screen } from "@testing-library/react";
 import { marker1 } from "../mock";
 
-const DetailSummaryCompo = <DetailSummary markers={{ aaaa: marker1 }} />
+const DetailSummaryCompo = <DetailSummary markers={
+  { aaaa: marker1 }} />
 ;
 
 describe("DetailSummary", () => {

@@ -27,7 +27,6 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
       walkingSpeed: settings.speed,
       distanceMeasure: settings.distance,
     });
-    // console.log('NEWMARKER', newMarker)
     let response: any = await newMarker.save();
 
     for (const key in updatedMarkers) {
@@ -40,7 +39,6 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
         }
       );
     }
-    // console.log('RESPOOOONSSSSSSSSSSSEEEE', response)
     res.status(200).json(response);
   } catch (error) {
     res.status(500).send(`Server Error1: ${error}`);
