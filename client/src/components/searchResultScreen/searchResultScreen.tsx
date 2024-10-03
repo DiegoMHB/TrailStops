@@ -95,7 +95,7 @@ function SearchResultScreen({
             ))
               
           ) : loading ? <p className="result-msg">Accommodation loading...</p> : (
-            <p className="result-msg">No accommodation found.</p>
+            <p className="result-msg" data-testId="noAccomo">No accommodation found.</p>
           )}
         </ul>
         <div id="wildOptionBox">

@@ -1,9 +1,6 @@
-//Interfaces are temporary located in the same file.
-//I group them in the order i found them in the folders :
-
 import { LatLng } from "leaflet"
 
-//HELPER FUNCTIONS:
+
 
 export interface PointLngLat {
   lng: number,
@@ -15,7 +12,6 @@ export interface CalculationSettings {
   speed: number
 }
 
-//COMPONENTS
 
 export interface Distance {
   dist: number,

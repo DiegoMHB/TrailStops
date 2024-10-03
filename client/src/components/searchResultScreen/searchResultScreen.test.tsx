@@ -21,10 +21,4 @@ describe("Search Result Screen", () => {
       expect(btt).toBeInTheDocument();
     });
   });
-
-  // describe("Search Result Screen", () => {
-  //   it("renders a component with 3 different buttons", () => {
-  //     render(SearchResultCompo);
-  //   });
-  // });
 });

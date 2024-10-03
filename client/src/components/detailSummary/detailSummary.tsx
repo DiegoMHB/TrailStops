@@ -22,13 +22,13 @@ const DetailSummary = ({ markers }: DetailSummaryProps) => {
         className="markerIcon"
         src="marker-icon-2x.png"
         alt="marker icon"
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: "10px" , fontSize: "13px" }}
       />
       <p>Start</p>
       <p className="emoji">&#128315;</p>
       {sortedMarkers[0].prevDist ? (
         <>
-          <p style={{ marginBottom: "0px" }}>
+          <p style={{ marginBottom: "0px" , fontSize: "13px" }}>
             {sortedMarkers[0].prevDist.dist} kms/
             {sortedMarkers[0].prevDist.time} hrs{" "}
           </p>
@@ -42,10 +42,10 @@ const DetailSummary = ({ markers }: DetailSummaryProps) => {
           Object.values(markers).map((marker) => (
             <div className="marker" key={marker._id}>
               <img className="markerIcon" src="map-pin.svg" alt="marker icon" />
-              <p style={{ marginBottom: "0px" }}>Stop {marker.order}</p>
+              <p style={{ marginBottom: "0px", fontSize: "13px" }}>Stop {marker.order}</p>
               <div className="markerInfo">
                 <p className="emoji">&#128315;</p>
-                <p style={{ marginBottom: "0px" }}>
+                <p style={{ marginBottom: "0px", fontSize: "13px" }}>
                   {marker.nextDist?.dist} kms/{marker.nextDist?.time} hrs
                 </p>
                 <p className="emoji">&#128315;</p>

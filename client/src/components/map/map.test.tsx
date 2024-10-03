@@ -99,21 +99,6 @@ describe("map", () => {
     expect(route).toBeInTheDocument();
   });
 
-  // it("Should create a new marker when clicked on the route", async () => {
-  //   const mockMapClick = jest.fn();
-  //   require("react-leaflet").useMapEvents.mockImplementation((e: any) => {
-  //     e.click({ lat: 55.97, lng: -4.35 });
-  //   });
-  //   render(
-  //     <Router>
-  //       <Map />
-  //     </Router>
-  //   );
 
-  //   const mapContainer = screen.getByTestId("mapContainer");
-  //   fireEvent.click(mapContainer);
-
-  //   expect(mockMapClick).toHaveBeenCalledWith({ lat: 55.97, lng: -4.35 });
-  // });
 
 });
