@@ -61,7 +61,6 @@ function SearchResultScreen({
     setMarkers(updatedMarkers);
     DBService.addAccommodation("aidan@test.com", accommodation, marker._id)
   }
-  // Email should be whatever the current user's email or user id is
 
   const calculationSettings = {
     distance: 'km',
@@ -91,32 +90,51 @@ function SearchResultScreen({
                 <br />
                 {accommodation.vicinity}
               </li>
-              <img className='accommodationImage' src={accommodation.url} alt={accommodation.name} />
-              <Button variant='contained' onClick={() => updateAccommodation(accommodation.name + " - " + accommodation.vicinity)}>Select</Button>
+              <img className='accommodationImage imageLink' onClick={() => updateAccommodation(accommodation.name + " - " + accommodation.vicinity)} src={accommodation.url} alt={accommodation.name} />
               </div>
             ))
               
-          ) : loading ? <p>Accommodation loading...</p> : (
-            <p>No accommodation found.</p>
+          ) : loading ? <p className="result-msg">Accommodation loading...</p> : (
+            <p className="result-msg">No accommodation found.</p>
           )}
         </ul>
-        <p className='wildOption'>Wild Camping</p>
-        <Button variant='contained' onClick={() => updateAccommodation("Wild Camping")}>Select</Button>
+        <div id="wildOptionBox">
+          <p className='wildOption'>Wild Camping</p>
+          <Button variant='contained' onClick={() => updateAccommodation("Wild Camping")}>Select</Button>
+        </div>
         </div>
       ) : (
         <p>No closest point data available.</p>
       )}
-        <div>
-        <h1>stop {marker.order}</h1>
-        <h2>Previous Stop: {marker.prevDist?.dist ? `${marker.prevDist.dist} km` : 'N/A'}</h2>
-        <h3>Time from previous stop: {marker.prevDist?.time ? `${marker.prevDist.time} hours` : 'N/A'}</h3>
-        <h2>Next Stop: {marker.nextDist?.dist ? `${marker.nextDist.dist} km` : 'N/A'}</h2>
-        <h3>Time to next stop: {marker.nextDist?.time ? `${marker.nextDist.time} hours` : 'N/A'}</h3>
-        <p>Selected accommodation: 
-        {selectedAccommodation === "" ? " no accommodation selected" : ` ${selectedAccommodation}`}
-      </p>
-      <Button variant='contained' style={{marginRight: "10px"}} onClick={() => closeOverlay()}>Back</Button>
-      <Button variant='contained' onClick={() => deleteMarker(marker._id)}>Delete Marker</Button>
+        <div className="searchResultTripData">
+        <h1>Stop {marker.order}</h1>
+        <h3 className="stopHeading"><span id="prev-stop-heading">&larr; Previous Stop</span></h3>
+        <table className="timeDistanceTable">
+          <tr className="tableHeadings">
+            <th>Distance</th><th>Time</th>
+          </tr>
+          <tr>
+            <td>{marker.prevDist?.dist ? `${marker.prevDist.dist} km` : 'N/A'}</td>
+            <td>{marker.prevDist?.time ? `${marker.prevDist.time} hours` : 'N/A'}</td>
+          </tr>
+        </table>
+        <h3 className="stopHeading"><span id="next-stop-heading">Next Stop &rarr;</span></h3>
+        <table className="timeDistanceTable">
+          <tr className="tableHeadings">
+            <th>Distance</th><th>Time</th>
+          </tr>
+          <tr>
+            <td>{marker.nextDist?.dist ? ` ${marker.nextDist.dist} km` : ' N/A'}</td>
+            <td>{marker.nextDist?.time ? `${marker.nextDist.time} hours` : 'N/A'}</td>
+          </tr>
+        </table>
+        <div id="selectedAccommodationContainer"><span id="selectedHeading">Selected Accommodation</span>
+          <span id="selectedText">{selectedAccommodation === "" ? " None" : ` ${selectedAccommodation}`}</span>
+        </div>
+      <div className="button-container">
+        <Button variant='contained' style={{marginRight: "10px"}} onClick={() => closeOverlay()}>Back</Button>
+        <Button variant='contained' onClick={() => deleteMarker(marker._id)}>Delete Marker</Button>
+      </div>
       </div>
     </div>
   )

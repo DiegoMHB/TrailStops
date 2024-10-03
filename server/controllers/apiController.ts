@@ -17,14 +17,13 @@ export const getAccommodation = async (req: Request, res: Response): Promise<voi
     const data = await response.json();
     res.status(200).json(data)
   } catch (error) {
-    console.log(error);
     res.status(500).send("Server Error");
   }
 }
 
 export const getAccommodationPic = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { photo_reference } = req.query;
+    const { photo_reference } = req.query as { photo_reference: string };
     if (!photo_reference) {
       res.status(400).json({ error: 'Photo reference is required' });
       return;

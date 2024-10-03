@@ -4,12 +4,12 @@ import createServer from '../server';
 import { User, UserMarkers } from '../models/schema';
 import { addUser, getUser, addMarker } from '../controllers/DBController';
 import { Request, Response } from 'express';
-import {mockMarkers,  mockUpdatedMarkers, mockSettings} from '../__mocks__/mocks.ts'
+import {mockMarkers} from '../__mocks__/mocks.ts'
 
 const request = supertest;
 const app = createServer();
 
-// Please ignore the red underline under mockingoose as the tests work fine. For a detailed overview, run 'npx jest --verbose'
+// Please ignore the red line under mockingoose as this is an issue with the library and the tests work fine.
 
 const mockResponse = (): Partial<Response> => {
     const res: Partial<Response> = {}; // Use Partial to allow optional properties
@@ -25,7 +25,7 @@ describe('POST /user', () => {
         const req: Partial<Request> = {
             body: {
               name: 'tester',
-              email: 'tester@testing.com',
+              email: mockMarkers[0].user_id,
               password: 'test',
             },
           } as Partial<Request>;

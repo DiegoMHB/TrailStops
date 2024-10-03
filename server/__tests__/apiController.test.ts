@@ -1,16 +1,8 @@
-import * as mockingoose from 'mockingoose';
-import createServer from '../server';
-import supertest from 'supertest';
-import {getAccommodationPic} from '../controllers/apiController';
+import {getAccommodationPic, getAccommodation, getAccommodationDetails} from '../controllers/apiController';
 import { Request, Response } from 'express';
-import {photoRef} from '../__mocks__/mocks.ts'
+import {photoRef, placeId} from '../__mocks__/mocks.ts'
 
-
-const request = supertest;
-
-const databaseName = 'test';
-
-const app = createServer();
+jest.mock('node-fetch');
 
 const mockResponse = (): Partial<Response> => { // Returns type with optional properties
   const res: Partial<Response> = {};
@@ -38,53 +30,48 @@ describe('GET /accommodationPic', () => {
       });
 
   });
+<<<<<<< HEAD
 
-
-    //     it('should save geographical markers to the database', async() => {
-
-    //     const markers = {user_id: 'aidan@test.com', position: {lat: 56.046547415929844, lng: -4.400127729426957}, hotel: 'hotel', _id: '1234', nextDist: {dist: 1, time: 1}, prevDist: {dist: 2, time: 2}, order: 10, walkingSpeed: 3, distanceMeasure: 'km'};
-        
-    //     const response = await request.post('/mapMarkers', )
-    //     .send(markers);
-        
-    //     const foundMarkers = await UserMarkers.findOne({position: markers.position});
-    //     expect(foundMarkers.position).toBe(markers.position);
-    // })
-
-    // it('should return status 200 and the response object', async () => {
-    //     const response = await request(router)
-    //       .post('/mapMarkers')
-    //       .send({
-    //         _id: 1234,
-    //         user_id: 'aidan@test.com',
-    //         marker: { position: {lat: 56.046547415929844, lng: -4.400127729426957}, hotel: 'someHotel', nextDist: {dist: 1, time: 1}, prevDist: {dist: 2, time: 2}, order: 1 },
-    //         updatedMarkers: { 'someKey': { prevDist: 3, nextDist: 3, order: 2 } },
-    //         settings: { speed: 3, distance: 'km' }
-    //       });
-    
-    //     expect(response.status).toBe(200);
-    //     expect(response.body).toHaveProperty('_id');
-    //   });
+=======
 })
+>>>>>>> 36dca246d71af1128a6f2bbf686e304961f664ea
 
+describe('GET /accommodation', () => {
 
-// try {
-//     const _id = marker._id
-//     const response = await fetch(`${BASE_URL}/mapMarkers`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({_id: _id, user_id: user_id, marker: marker, updatedMarkers: updatedMarkers, settings: settings}),
-//   })
-//   const data = await response.json();
+  describe('given a longitude and latitude', () => {
+      it ('should return all accommodation options in the vicinity', async() => {
+        const res: Partial<Response> = mockResponse() as Partial<Response>;
+        const req: Partial<Request> = {
+          query: {
+            lon: String(55.8645356), // req.params must hold strings, so convert first
+            lat: String(-4.2543874),
+          }
+        };
+        await getAccommodation(req as Request, res as Response);
+        expect(res.json).toEqual(expect.objectContaining({name: expect.anything()}))
+        // Expects an object with a name property, i.e. an accommodation name
+      })
+    });
 
+});
 
+// describe('GET /accommodationDetails', () => {
 
-    // beforeAll(async () => {
-    //     const url = `mongodb://127.0.0.1/${databaseName}`;
-    //     await mongoose.connect(url);
-    // })
-    //     afterEach(async () => {
-    //     await mongoose.disconnect();
-    // })
+//   describe('given a place id', () => {
+//     it('should return details of the associated accommodation', async () => {
+//       const res: Partial<Response> = mockResponse() as Partial<Response>;
+//       const req: Partial<Request> = {
+//         query: {
+//           place_id: `${placeId}`,
+//         }
+//       };
+
+//       await getAccommodationDetails(req as Request, res as Response);
+
+//       expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+//         address_components: expect.anything(),
+//       }));
+//     })
+
+//   });
+// });

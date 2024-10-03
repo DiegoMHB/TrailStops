@@ -34,7 +34,7 @@ export interface Place {
 
 export interface LatLng {
   lat: number;
-  lng: number;
+  lon: number;
 }
 
 export interface Viewport {

@@ -46,7 +46,6 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
 
 export const updateAllMarkers = async (req: Request, res: Response): Promise<void> => {
   try {
-    // const { markers } = req.body;
     const { markers }: { markers: { [key: string]: { _id: string;[key: string]: any } } } = req.body;
     const updatePromises = Object.keys(markers).map(async (key) => {
       const marker = markers[key];
