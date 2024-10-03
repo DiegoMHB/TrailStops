@@ -15,8 +15,9 @@ async function getMarkers(user_id: string)
 async function addMarker
   (user_id: string, marker: MarkerInterface, updatedMarkers: DynamicMarkers, settings: CalculationSettings)
   : Promise<void | MarkerInterface> {
-  try {
-    const _id = marker._id
+    try {
+      const _id = marker._id;
+      console.log(`aejfnaognauini`,_id, user_id, marker, updatedMarkers, settings)
     const response = await fetch('http://localhost:3001/mapMarkers', {
       method: 'POST',
       headers: {

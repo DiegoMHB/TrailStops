@@ -27,7 +27,9 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
       walkingSpeed: settings.speed,
       distanceMeasure: settings.distance,
     });
+    // console.log('NEWMARKER', newMarker)
     let response: any = await newMarker.save();
+
     for (const key in updatedMarkers) {
       response = await UserMarkers.findOneAndUpdate(
         { _id: key },
@@ -38,6 +40,7 @@ export const addMarker = async (req: Request<{}, {}, AddMarkerRequestBody>, res:
         }
       );
     }
+    // console.log('RESPOOOONSSSSSSSSSSSEEEE', response)
     res.status(200).json(response);
   } catch (error) {
     res.status(500).send(`Server Error1: ${error}`);
@@ -97,7 +100,7 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
       res.status(404).json({ message: 'User not found' });
       return;
     };
-    if (password === user.password) {      
+    if (password === user.password) {
       user.password = "";
       res.status(200).json(user)
     }

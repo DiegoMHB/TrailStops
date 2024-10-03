@@ -89,7 +89,9 @@ const MapComponent = () => {
             Object.values(updatedMarkers),
             settingsData
           );
+          console.log(newMarker)
           setMarkers(calculatedMarkers );
+          console.log(calculatedMarkers)
           DBService.addMarker(
             "aidan@test.com",
             calculatedMarkers[newMarker._id],

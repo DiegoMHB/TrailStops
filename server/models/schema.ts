@@ -11,7 +11,7 @@ interface UserMarkers extends Document {
   user_id: string;
   position: {
     lat: number;
-    lon: number;
+    lng: number;
   };
   hotel?: string;
   prevDist: {
@@ -38,7 +38,7 @@ const userMarkersSchema: Schema<UserMarkers> = new Schema({
   user_id: { type: String, required: true },
   position: {
     lat: { type: Number, required: true },
-    lon: { type: Number, required: true },
+    lng: { type: Number, required: true },
   },
   hotel: { type: String }, 
   prevDist: {

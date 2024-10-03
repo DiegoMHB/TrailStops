@@ -28,8 +28,16 @@ function closestPoints(pointCoords: number[]): number[] {
 
   // find the point the click would be closest to on a line between the two closest points
   const closestLinePoint = placeMarkerBetweenPoints([targetLat, targetLon], lowerPoint, higherPoint);
-  console.log('CLOSEST', closestLinePoint)
-  return closestLinePoint
+  const distanceToLower = Math.hypot(lowerPoint[0] - targetLat, lowerPoint[1] - targetLon);
+  const distanceToHigher = Math.hypot(higherPoint[0] - targetLat, higherPoint[1] - targetLon);
+  const distanceToProjection = Math.hypot(closestLinePoint[0] - targetLat, closestLinePoint[1] - targetLon);
+
+  // Return the closest point: either the closestLinePoint or one of the two points
+  if (distanceToProjection < Math.min(distanceToLower, distanceToHigher)) {
+    return closestLinePoint;
+  } else {
+    return distanceToLower < distanceToHigher ? lowerPoint : higherPoint;
+  }
 }
 
 export default closestPoints;
